@@ -152,7 +152,7 @@
         app:srcCompat="@drawable/priority" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/rgp"
         android:layout_width="100dp"
         android:layout_height="64dp"
         android:layout_marginStart="8dp"

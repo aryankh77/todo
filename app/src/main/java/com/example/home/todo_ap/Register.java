@@ -1,6 +1,7 @@
 package com.example.home.todo_ap;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,9 +12,10 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import java.io.ObjectInput;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.Socket;
 
 public class Register extends AppCompatActivity {
     public EditText userName, email, password, name, familyName;
@@ -24,6 +26,7 @@ public class Register extends AppCompatActivity {
     boolean n = false;
     boolean e = false;
     boolean p = false;
+    boolean eisc = false;
     String select;
     static ObjectInputStream objectInputStream;
     static ObjectOutputStream objectOutputStream;
@@ -125,39 +128,19 @@ public class Register extends AppCompatActivity {
 
             // the user's changes are saved here
             public void onTextChanged(CharSequence c, int start, int before, int count) {
-                boolean is = false;
-                for (int i = 0; i < c.length(); i++) {
-                    if (c.toString().charAt(i) == '@') {
-                        if (c.toString().endsWith(".com") || c.toString().endsWith(".ir")) {
-                            is = true;
-                            e = true;
-                            break;
-                        }
-                    }
-                }
-                if (is == false) {
-                    email.setError("email notvalid it must have @ and .com");
-                    invisibel(confirm);
-                    e = false;
-                }
-
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() == 0 || checkword(s)) {
-                    email.setError("you must fill your email or you put notvalid word ");
+                eisc=s.toString().matches("^([a-zA-Z0-9_\\-.]+)@([a-zA-Z0-9_\\-.]+)\\.([a-zA-Z]{2,5})$");
+                if (!eisc) {
+                    email.setError("you must fill your email or you put wrong email ");
                     invisibel(confirm);
                     e = false;
                 } else {
-                    //visibel(confirm);
                     e = true;
                 }
-                /*if(checkword(s)){
-                    email.setError("email start with nonvalid word");
-                    invisibel(confirm);
-                }*/
 
                 if (u == true && p == true && n == true && e == true) {
                     visibel(confirm);
@@ -205,21 +188,36 @@ public class Register extends AppCompatActivity {
                 String em = email.getText().toString();
                 String na = name.getText().toString();
                 String fn = familyName.getText().toString();
-                /*try {
-                    objectOutputStream.writeUTF("register");
-                    objectOutputStream.writeUTF(un);
-                    objectOutputStream.writeUTF(pa);
-                    objectOutputStream.writeUTF(na);
-                    objectOutputStream.writeUTF(fn);
-                    objectOutputStream.writeUTF(em);
-                    objectOutputStream.writeUTF(select);
-                }catch (Exception io){
-                }*/
+                    Request request=new Request(un+" "+pa+" "+em+" "+na+" "+fn+" "+select,"register",null);
+                MyAsyncTask myAsyncTask = new MyAsyncTask();
+                myAsyncTask.setL(new MyAsyncTask.Listener() {
+                    @Override
+                    public void onDataReceive(Object o) {
+                        if(((Request)o).getType().equals("exist")){
+                            String message=((Request)o).getMessage();
+                            message=message.split("\\s")[0];
+                            if (message.equals("username")){
+                                userName.setError("username exist");
+                            }
+                            if (message.equals("email")){
+                                email.setError("email exist");
+                            }
+                        }else{
+                            MainActivity.user= (User) ((Request)o).getSerializable();
+                            Intent intent = new Intent(Register.this, Home.class);
+                            startActivity(intent);
+                            finish();
 
-                Intent intent = new Intent(Register.this, Home.class);
-                startActivity(intent);
-                finish();
+                        }
 
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+                });
+                myAsyncTask.execute(request);
             }
         });
 
@@ -227,7 +225,7 @@ public class Register extends AppCompatActivity {
     }
 
 
-    public void checkbutton(View v) {
+    public  void checkbutton(View v) {
         int radioid = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(radioid);
     }
@@ -311,6 +309,7 @@ public class Register extends AppCompatActivity {
 
         return up3;
     }
+
     }
 
 

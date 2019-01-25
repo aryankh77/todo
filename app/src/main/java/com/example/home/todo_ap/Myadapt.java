@@ -9,8 +9,8 @@ import java.util.List;
 
 public class Myadapt extends RecyclerView.Adapter<Myadapt.AdapterViewHolder> {
 
-    List<Taskinfo> tasks;
-    Myadapt(List<Taskinfo> tasks){
+    List<TaskInfo> tasks;
+    Myadapt(List<TaskInfo> tasks){
         this.tasks = tasks;
     }
     @NonNull

@@ -34,11 +34,13 @@
             android:tint="@color/botton"
             app:srcCompat="@android:drawable/ic_input_add" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerViewTasks"
+        <ListView
+            android:id="@+id/lv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="8dp" />
+            android:paddingBottom="8dp"
+            />
+
 
     </FrameLayout>
 
