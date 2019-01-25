@@ -19,6 +19,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Home extends AppCompatActivity {
     FloatingActionButton fab;
@@ -38,7 +39,7 @@ public class Home extends AppCompatActivity {
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         navigationView = findViewById(R.id.ngv);
         navigationView.setItemIconTintList(null);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +57,11 @@ public class Home extends AppCompatActivity {
             public void onDataReceive(Object o) {
                 ArrayList<TaskInfo> tasks= (ArrayList<TaskInfo>) ((Request)o).getSerializable();
                 MainActivity.user.setTasks(tasks);
+                /*for (TaskInfo task : tasks) {
+                    //todo list view in kosshera add item ina kos goft be man mamad
+                       }*/
+                System.out.println(tasks);
+                listView.setAdapter(new MyAdapter(Home.this,tasks));
             }
             @Override
             public void onError(Exception e) {

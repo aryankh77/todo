@@ -2,7 +2,7 @@ package com.example.home.todo_ap;
 
 import java.io.Serializable;
 import java.util.Objects;
-    public class TaskInfo implements Serializable {
+    public class TaskInfo implements Serializable,Comparable<TaskInfo> {
         private static final long serialVersionUID=4321;
         private String taskName;
         private String date;
@@ -72,4 +72,19 @@ import java.util.Objects;
         public int hashCode() {
             return Objects.hash(taskName, date, time, comment, priority);
         }
+
+        @Override
+        public int compareTo(TaskInfo o) {
+            if(o.date.compareTo(this.date) == 0)
+            {
+                if(this.priority == o.priority) return 0;
+                if(this.priority == Priority.high) return 1;
+                if(this.priority == Priority.low) return -1;
+                if(o.priority == Priority.high) return -1;
+                if(o.priority == Priority.low) return 1;
+
+            }
+            return -1 * o.date.compareTo(this.date);
+        }
     }
+
