@@ -11,6 +11,7 @@ public class Request implements Serializable {
     public Request(String message, String type, Serializable serializable) {
         this.message = message;
         this.type = type;
+        this.serializable=serializable;
     }
 
     public String getMessage() {

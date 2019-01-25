@@ -49,7 +49,7 @@ public class Home extends AppCompatActivity {
                 finish();
             }
         });
-        Request request = new Request(null, "get tasks", MainActivity.user);
+        Request request = new Request("", "get tasks", MainActivity.user);
         MyAsyncTask myAsyncTask = new MyAsyncTask();
         myAsyncTask.setL(new MyAsyncTask.Listener() {
             @Override

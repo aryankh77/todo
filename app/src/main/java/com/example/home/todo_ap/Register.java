@@ -188,7 +188,7 @@ public class Register extends AppCompatActivity {
                 String em = email.getText().toString();
                 String na = name.getText().toString();
                 String fn = familyName.getText().toString();
-                    Request request=new Request(un+" "+pa+" "+em+" "+na+" "+fn+" "+select,"register",null);
+                    Request request=new Request(un+" "+pa+" "+na+" "+fn+" "+em+" "+select,"register",null);
                 MyAsyncTask myAsyncTask = new MyAsyncTask();
                 myAsyncTask.setL(new MyAsyncTask.Listener() {
                     @Override
@@ -203,10 +203,9 @@ public class Register extends AppCompatActivity {
                                 email.setError("email exist");
                             }
                         }else{
-                            MainActivity.user= (User) ((Request)o).getSerializable();
+                            MainActivity.user= (User)( ((Request)o).getSerializable());
                             Intent intent = new Intent(Register.this, Home.class);
                             startActivity(intent);
-                            finish();
 
                         }
 

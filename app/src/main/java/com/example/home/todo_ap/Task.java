@@ -21,6 +21,7 @@ import android.widget.TimePicker;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -106,15 +107,17 @@ public class Task extends AppCompatActivity {
                 taskInfo.setComment(etc.getText().toString());
                 taskInfo.setTime(textViewc.getText().toString());
                 taskInfo.setDate(textViewd.getText().toString());
-                Object[] objects={taskInfo,MainActivity.user};
-                Request request=new Request(null,"add task",objects);
+                Serializable[] objects={taskInfo,MainActivity.user};
+                Request request=new Request("","add task",objects);
                 MyAsyncTask myAsyncTask = new MyAsyncTask();
                 myAsyncTask.setL(new MyAsyncTask.Listener() {
                     @Override
                     public void onDataReceive(Object o) {
+                        if(((Request)o).getType().equals("success")){
                         Intent homeIntent = new Intent(Task.this, Home.class);
                         startActivity(homeIntent);
-                        finish();
+                        }
+
                     }
                     @Override
                     public void onError(Exception e) {
