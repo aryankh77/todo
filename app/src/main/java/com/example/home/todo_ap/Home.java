@@ -47,7 +47,6 @@ public class Home extends AppCompatActivity {
             public void onClick(View view) {
                 Intent homeIntent = new Intent(Home.this, Task.class);
                 startActivity(homeIntent);
-                finish();
             }
         });
         Request request = new Request("", "get tasks", MainActivity.user);
@@ -57,9 +56,6 @@ public class Home extends AppCompatActivity {
             public void onDataReceive(Object o) {
                 ArrayList<TaskInfo> tasks= (ArrayList<TaskInfo>) ((Request)o).getSerializable();
                 MainActivity.user.setTasks(tasks);
-                /*for (TaskInfo task : tasks) {
-                    //todo list view in kosshera add item ina kos goft be man mamad
-                       }*/
                 System.out.println(tasks);
                 listView.setAdapter(new MyAdapter(Home.this,tasks));
             }
@@ -69,9 +65,6 @@ public class Home extends AppCompatActivity {
         });
         myAsyncTask.execute(request);
 
-//        for (TaskInfo task : tasks) {
-            //todo list view in kosshera add item ina kos goft be man mamad
-  //      }
 
 
 

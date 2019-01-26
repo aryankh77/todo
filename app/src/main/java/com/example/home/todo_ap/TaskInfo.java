@@ -82,7 +82,6 @@ import java.util.Objects;
                 if(this.priority == Priority.low) return -1;
                 if(o.priority == Priority.high) return -1;
                 if(o.priority == Priority.low) return 1;
-
             }
             return -1 * o.date.compareTo(this.date);
         }

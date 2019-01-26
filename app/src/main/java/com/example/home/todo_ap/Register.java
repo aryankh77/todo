@@ -270,6 +270,7 @@ public class Register extends AppCompatActivity {
                     || c.charAt(i) == '#' || c.charAt(i) == '$' || c.charAt(i) == '%' || c.charAt(i) == '^' || c.charAt(i) == '&' || c.charAt(i) == '*' || c.charAt(i) == '(' || c.charAt(i) == ')' || c.charAt(i) == '-' || c.charAt(i) == '_' || c.charAt(i) == '=' || c.charAt(i) == '+' || c.charAt(i) == '|' || c.charAt(i) == '"' || c.charAt(i) == ';' || c.charAt(i) == ':'
                     || c.charAt(i) == ']' || c.charAt(i) == '}' || c.charAt(i) == '[' || c.charAt(i) == '{') {
                 f =true;
+                break;
             } else {
                 f= false;
             }
